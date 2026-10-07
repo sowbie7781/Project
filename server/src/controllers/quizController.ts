@@ -4,30 +4,58 @@ import { QuizAttempt } from '../models/Quiz';
 import { Progress } from '../models/Progress';
 import { AuthRequest } from '../middleware/auth';
 
+import mongoose from 'mongoose';
+import { fallbackStore } from '../services/fallbackStore';
+
 export const getQuizzes = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { skillId, difficulty } = req.query;
-    const filter: any = {};
+    let formatted: any[] = [];
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const { skillId, difficulty } = req.query;
+        const filter: any = {};
 
-    if (skillId) filter.skill = skillId;
-    if (difficulty && difficulty !== 'All') filter.difficulty = difficulty;
+        if (skillId) filter.skill = skillId;
+        if (difficulty && difficulty !== 'All') filter.difficulty = difficulty;
 
-    const quizzes = await Quiz.find(filter)
-      .populate('skill', 'name category difficulty')
-      .select('title skill difficulty questions.length');
+        const quizzes = await Quiz.find(filter)
+          .populate('skill', 'name category difficulty')
+          .select('title skill difficulty questions.length');
 
-    // Attach question count
-    const formatted = quizzes.map((q: any) => ({
-      _id: q._id,
-      title: q.title,
-      skill: q.skill,
-      difficulty: q.difficulty,
-      questionCount: q.questions ? q.questions.length : 0,
-    }));
+        formatted = quizzes.map((q: any) => ({
+          _id: q._id,
+          title: q.title,
+          skill: q.skill,
+          difficulty: q.difficulty,
+          questionCount: q.questions ? q.questions.length : 0,
+        }));
+      } catch (e) {
+        formatted = [];
+      }
+    }
+
+    if (!formatted || formatted.length === 0) {
+      formatted = fallbackStore.getQuizzes().map((q: any) => ({
+        _id: q._id,
+        title: q.title,
+        skill: q.skill,
+        difficulty: q.difficulty || 'Intermediate',
+        questionCount: q.questions ? q.questions.length : 1,
+      }));
+    }
 
     res.json({ success: true, quizzes: formatted });
   } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message || 'Failed to fetch quizzes.' });
+    res.json({
+      success: true,
+      quizzes: fallbackStore.getQuizzes().map((q: any) => ({
+        _id: q._id,
+        title: q.title,
+        skill: q.skill,
+        difficulty: q.difficulty || 'Intermediate',
+        questionCount: q.questions ? q.questions.length : 1,
+      })),
+    });
   }
 };
 

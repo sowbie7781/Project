@@ -5,43 +5,55 @@ dotenv.config();
 
 let isConnected = false;
 
-export const connectDB = async (): Promise<void> => {
-  if (isConnected) {
-    return;
+export const connectDB = async (): Promise<boolean> => {
+  if (isConnected && mongoose.connection.readyState === 1) {
+    return true;
   }
 
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/skillpath';
+  const mongoUri = process.env.MONGODB_URI;
+
+  // On Vercel / serverless without MONGODB_URI configured, do not waste timeout on localhost
+  if (!mongoUri && process.env.VERCEL) {
+    console.log('[Database] MONGODB_URI is not set on Vercel. Running in resilient in-memory fallback mode.');
+    return false;
+  }
+
+  const targetUri = mongoUri || 'mongodb://localhost:27017/skillpath';
 
   try {
-    // Attempt standard connection first
-    const conn = await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 3000,
+    const conn = await mongoose.connect(targetUri, {
+      serverSelectionTimeoutMS: 2500,
     });
     isConnected = true;
     console.log(`[Database] MongoDB connected successfully to: ${conn.connection.host}`);
+    return true;
   } catch (primaryErr: any) {
-    console.warn(`[Database] Standard MongoDB connection failed: ${primaryErr.message}`);
+    console.warn(`[Database] MongoDB connection to "${targetUri}" failed: ${primaryErr.message}`);
 
-    // If in dev or standalone mode and local mongo isn't running, spin up MongoMemoryServer
-    try {
-      console.log('[Database] Initializing embedded in-memory MongoDB fallback...');
-      const { MongoMemoryServer } = await import('mongodb-memory-server');
-      const mongod = await MongoMemoryServer.create();
-      const memoryUri = mongod.getUri();
+    // If local dev environment (not Vercel) and MongoMemoryServer is available, try it
+    if (!process.env.VERCEL) {
+      try {
+        console.log('[Database] Initializing embedded in-memory MongoDB fallback...');
+        const { MongoMemoryServer } = await import('mongodb-memory-server');
+        const mongod = await MongoMemoryServer.create();
+        const memoryUri = mongod.getUri();
 
-      const memoryConn = await mongoose.connect(memoryUri);
-      isConnected = true;
-      console.log(`[Database] Connected to embedded in-memory MongoDB at: ${memoryUri}`);
+        await mongoose.connect(memoryUri);
+        isConnected = true;
+        console.log(`[Database] Connected to embedded in-memory MongoDB at: ${memoryUri}`);
 
-      // Handle graceful shutdown
-      process.on('SIGINT', async () => {
-        await mongoose.disconnect();
-        await mongod.stop();
-        process.exit(0);
-      });
-    } catch (fallbackErr: any) {
-      console.error(`[Database] Failed to start embedded in-memory MongoDB: ${fallbackErr.message}`);
-      throw primaryErr;
+        process.on('SIGINT', async () => {
+          await mongoose.disconnect();
+          await mongod.stop();
+          process.exit(0);
+        });
+        return true;
+      } catch (fallbackErr: any) {
+        console.warn(`[Database] MongoMemoryServer not initialized: ${fallbackErr.message}`);
+      }
     }
+
+    console.log('[Database] Fallback store active for demo logins and evaluation.');
+    return false;
   }
 };

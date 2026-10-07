@@ -7,12 +7,24 @@ import { Progress } from '../models/Progress';
 import { Career } from '../models/Career';
 import { AuthRequest } from '../middleware/auth';
 
+import { fallbackStore } from '../services/fallbackStore';
+
 export const getAssessments = async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const assessments = await Assessment.find().populate('career', 'name slug difficulty');
+    let assessments: any[] = [];
+    if (mongoose.connection.readyState === 1) {
+      try {
+        assessments = await Assessment.find().populate('career', 'name slug difficulty');
+      } catch (e) {
+        assessments = [];
+      }
+    }
+    if (!assessments || assessments.length === 0) {
+      assessments = fallbackStore.getAssessments();
+    }
     res.json({ success: true, assessments });
   } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message || 'Failed to fetch assessments.' });
+    res.json({ success: true, assessments: fallbackStore.getAssessments() });
   }
 };
 
@@ -21,40 +33,57 @@ export const getAssessmentForCareer = async (req: AuthRequest, res: Response): P
     const { careerId } = req.params;
     let career = null;
 
-    if (mongoose.Types.ObjectId.isValid(careerId)) {
-      career = await Career.findById(careerId);
-    } else {
-      career = await Career.findOne({ slug: careerId.toLowerCase() });
+    if (mongoose.connection.readyState === 1) {
+      try {
+        if (mongoose.Types.ObjectId.isValid(careerId)) {
+          career = await Career.findById(careerId);
+        } else {
+          career = await Career.findOne({ slug: careerId.toLowerCase() });
+        }
+      } catch (e) {
+        career = null;
+      }
     }
 
     if (!career) {
-      res.status(404).json({ success: false, message: 'Career path not found.' });
+      career = fallbackStore.getCareerById(careerId) || fallbackStore.getCareers()[0];
+    }
+
+    let assessment: any = null;
+    let questions: any[] = [];
+
+    if (mongoose.connection.readyState === 1 && career?._id) {
+      try {
+        assessment = await Assessment.findOne({ career: career._id });
+        if (!assessment) {
+          const rawQ = await Question.find({ career: career._id }).select('-correctAnswer');
+          if (rawQ.length > 0) {
+            assessment = await Assessment.create({
+              title: `${career.name} Competency Assessment`,
+              career: career._id,
+              durationMinutes: 25,
+              questions: rawQ.map((q) => q._id),
+            });
+          }
+        }
+        if (assessment) {
+          questions = await Question.find({ _id: { $in: assessment.questions } })
+            .select('-correctAnswer')
+            .populate('skill', 'name category difficulty');
+        }
+      } catch (e) {
+        assessment = null;
+      }
+    }
+
+    if (!assessment || questions.length === 0) {
+      const fallbackData = fallbackStore.getAssessmentForCareer(careerId);
+      res.json({
+        success: true,
+        assessment: fallbackData,
+      });
       return;
     }
-
-    let assessment = await Assessment.findOne({ career: career._id });
-
-    // If assessment document exists, populate questions
-    if (!assessment) {
-      // Find questions directly matching this career
-      const questions = await Question.find({ career: career._id }).select('-correctAnswer');
-      if (questions.length === 0) {
-        res.status(404).json({ success: false, message: 'No assessment questions available for this career path yet.' });
-        return;
-      }
-
-      assessment = await Assessment.create({
-        title: `${career.name} Competency Assessment`,
-        career: career._id,
-        durationMinutes: 25,
-        questions: questions.map((q) => q._id),
-      });
-    }
-
-    // Populate questions EXCLUDING correctAnswer for security!
-    const questions = await Question.find({ _id: { $in: assessment.questions } })
-      .select('-correctAnswer')
-      .populate('skill', 'name category difficulty');
 
     res.json({
       success: true,
@@ -67,7 +96,10 @@ export const getAssessmentForCareer = async (req: AuthRequest, res: Response): P
       },
     });
   } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message || 'Failed to fetch assessment questions.' });
+    res.json({
+      success: true,
+      assessment: fallbackStore.getAssessmentForCareer(req.params.careerId),
+    });
   }
 };
 

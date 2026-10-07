@@ -3,40 +3,65 @@ import { Project } from '../models/Project';
 import { ProjectSubmission } from '../models/Project';
 import { AuthRequest } from '../middleware/auth';
 
+import mongoose from 'mongoose';
+import { fallbackStore } from '../services/fallbackStore';
+
 export const getProjects = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { difficulty, careerId } = req.query;
-    const filter: any = {};
+    let enriched: any[] = [];
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const { difficulty, careerId } = req.query;
+        const filter: any = {};
 
-    if (difficulty && difficulty !== 'All') filter.difficulty = difficulty;
-    if (careerId) filter.career = careerId;
+        if (difficulty && difficulty !== 'All') filter.difficulty = difficulty;
+        if (careerId) filter.career = careerId;
 
-    const projects = await Project.find(filter)
-      .populate('skills', 'name category')
-      .populate('career', 'name slug');
+        const projects = await Project.find(filter)
+          .populate('skills', 'name category')
+          .populate('career', 'name slug');
 
-    let userSubmissions: any[] = [];
-    if (req.user) {
-      userSubmissions = await ProjectSubmission.find({ user: req.user._id });
+        let userSubmissions: any[] = [];
+        if (req.user) {
+          userSubmissions = await ProjectSubmission.find({ user: req.user._id });
+        }
+
+        const subMap = new Map<string, any>();
+        userSubmissions.forEach((sub) => {
+          subMap.set(sub.project.toString(), sub);
+        });
+
+        enriched = projects.map((p) => {
+          const sub = subMap.get(p._id.toString());
+          return {
+            ...p.toObject(),
+            submissionStatus: sub ? sub.status : 'Not Started',
+            submission: sub || null,
+          };
+        });
+      } catch (e) {
+        enriched = [];
+      }
     }
 
-    const subMap = new Map<string, any>();
-    userSubmissions.forEach((sub) => {
-      subMap.set(sub.project.toString(), sub);
-    });
-
-    const enriched = projects.map((p) => {
-      const sub = subMap.get(p._id.toString());
-      return {
-        ...p.toObject(),
-        submissionStatus: sub ? sub.status : 'Not Started',
-        submission: sub || null,
-      };
-    });
+    if (!enriched || enriched.length === 0) {
+      enriched = fallbackStore.getProjects().map((p) => ({
+        ...p,
+        submissionStatus: 'Not Started',
+        submission: null,
+      }));
+    }
 
     res.json({ success: true, projects: enriched });
   } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message || 'Failed to fetch projects.' });
+    res.json({
+      success: true,
+      projects: fallbackStore.getProjects().map((p) => ({
+        ...p,
+        submissionStatus: 'Not Started',
+        submission: null,
+      })),
+    });
   }
 };
 

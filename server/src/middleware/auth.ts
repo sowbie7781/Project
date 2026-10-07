@@ -2,8 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { User, IUser } from '../models/User';
 
+import mongoose from 'mongoose';
+import { fallbackStore } from '../services/fallbackStore';
+
 export interface AuthRequest extends Request {
-  user?: IUser;
+  user?: any;
 }
 
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
@@ -17,8 +20,20 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
     const token = authHeader.split(' ')[1];
     const jwtSecret = process.env.JWT_SECRET || 'skillpath_default_jwt_secret_college';
 
-    const decoded = jwt.verify(token, jwtSecret) as { id: string };
-    const user = await User.findById(decoded.id).select('-passwordHash');
+    const decoded = jwt.verify(token, jwtSecret) as { id: string; role?: string };
+    let user: any = null;
+
+    if (mongoose.connection.readyState === 1) {
+      try {
+        user = await User.findById(decoded.id).select('-passwordHash');
+      } catch (dbErr) {
+        user = null;
+      }
+    }
+
+    if (!user) {
+      user = fallbackStore.findUserById(decoded.id);
+    }
 
     if (!user) {
       res.status(401).json({ success: false, message: 'User session invalid or user no longer exists.' });

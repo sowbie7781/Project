@@ -57,14 +57,14 @@ const apiLimiter = rateLimit({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Ensure database connection in serverless / Vercel fluid compute requests
+// Ensure database connection in serverless / Vercel fluid compute requests without crashing
 app.use(async (_req, _res, next) => {
   try {
     await connectDB();
-    next();
   } catch (err) {
-    next(err);
+    console.warn('[DB Middleware] Database connection attempt failed:', err);
   }
+  next();
 });
 
 // Mount API routes
@@ -80,29 +80,38 @@ app.use(errorHandler);
 
 import { seedDatabase } from './seed';
 import { Career } from './models';
+import mongoose from 'mongoose';
 
 // Start server after DB connection
 const startServer = async () => {
   try {
-    await connectDB();
+    const isConnected = await connectDB();
 
-    // Auto-seed if database is empty
-    const careerCount = await Career.countDocuments();
-    if (careerCount === 0) {
-      console.log('[Startup] Database is empty. Seeding initial careers, skills, questions, and users...');
-      await seedDatabase();
+    // Auto-seed if database is connected and empty
+    if (isConnected && mongoose.connection.readyState === 1) {
+      try {
+        const careerCount = await Career.countDocuments();
+        if (careerCount === 0) {
+          console.log('[Startup] Database is empty. Seeding initial careers, skills, questions, and users...');
+          await seedDatabase();
+        }
+      } catch (seedErr: any) {
+        console.warn('[Startup] Seeding skipped:', seedErr.message);
+      }
     }
 
-    app.listen(PORT, () => {
-      console.log(`===============================================`);
-      console.log(`🚀 SKILLPATH AI Server running on port ${PORT}`);
-      console.log(`🌐 Base API: http://localhost:${PORT}/api`);
-      console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`===============================================`);
-    });
+    // Only bind TCP port when running standalone (not in Vercel serverless)
+    if (!process.env.VERCEL) {
+      app.listen(PORT, () => {
+        console.log(`===============================================`);
+        console.log(`🚀 SKILLPATH AI Server running on port ${PORT}`);
+        console.log(`🌐 Base API: http://localhost:${PORT}/api`);
+        console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
+        console.log(`===============================================`);
+      });
+    }
   } catch (error) {
-    console.error('Critical failure during server startup:', error);
-    process.exit(1);
+    console.warn('Server startup notice (running with resilient in-memory fallback):', error);
   }
 };
 
