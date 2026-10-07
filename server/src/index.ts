@@ -118,4 +118,10 @@ const startServer = async () => {
 
 startServer();
 
+// Direct export for Vercel Serverless / Express request listener compatibility
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = app;
+  (module.exports as any).default = app;
+}
+
 export default app;
