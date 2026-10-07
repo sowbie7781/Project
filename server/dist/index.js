@@ -62,10 +62,11 @@ app.use(async (_req, _res, next) => {
     }
     next();
 });
-// Mount API routes
+// Mount API routes (supports both /api and root path in serverless proxies)
 app.use('/api', apiLimiter, routes_1.default);
+app.use('/', apiLimiter, routes_1.default);
 // 404 handler for API routes
-app.use('/api/*', (_req, res) => {
+app.use((_req, res) => {
     res.status(404).json({ success: false, message: 'API route not found' });
 });
 // Centralized error handling

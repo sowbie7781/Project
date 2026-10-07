@@ -33,14 +33,34 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const fillDemoStudent = () => {
+  const handleFastDemoStudent = async () => {
     setEmail('student@college.edu');
     setPassword('Student@2026!');
+    setError(null);
+    setLoading(true);
+    try {
+      await login({ email: 'student@college.edu', password: 'Student@2026!' });
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please verify your credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const fillDemoAdmin = () => {
+  const handleFastDemoAdmin = async () => {
     setEmail('admin@skillpath.ai');
     setPassword('Admin@SkillPath2026!');
+    setError(null);
+    setLoading(true);
+    try {
+      await login({ email: 'admin@skillpath.ai', password: 'Admin@SkillPath2026!' });
+      navigate('/admin');
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please verify your credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,17 +83,19 @@ export const LoginPage: React.FC = () => {
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={fillDemoStudent}
-              className="flex-1 py-1.5 px-2 bg-white hover:bg-brand-100/50 text-brand-700 text-xs font-semibold rounded-lg border border-brand-200 transition-colors shadow-subtle"
+              onClick={handleFastDemoStudent}
+              className="flex-1 py-1.5 px-2 bg-white hover:bg-brand-100/50 text-brand-700 text-xs font-semibold rounded-lg border border-brand-200 transition-colors shadow-subtle flex items-center justify-center gap-1.5"
             >
-              Demo Student
+              <span>Demo Student</span>
+              <span className="text-[10px] text-brand-500 font-normal">→ Sign In</span>
             </button>
             <button
               type="button"
-              onClick={fillDemoAdmin}
-              className="flex-1 py-1.5 px-2 bg-white hover:bg-brand-100/50 text-brand-700 text-xs font-semibold rounded-lg border border-brand-200 transition-colors shadow-subtle"
+              onClick={handleFastDemoAdmin}
+              className="flex-1 py-1.5 px-2 bg-white hover:bg-brand-100/50 text-brand-700 text-xs font-semibold rounded-lg border border-brand-200 transition-colors shadow-subtle flex items-center justify-center gap-1.5"
             >
-              Demo Admin
+              <span>Demo Admin</span>
+              <span className="text-[10px] text-brand-500 font-normal">→ Sign In</span>
             </button>
           </div>
         </div>
