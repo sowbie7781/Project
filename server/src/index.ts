@@ -23,9 +23,15 @@ const allowedOrigins = [CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin (like mobile apps, curl, or postman)
+      // allow requests with no origin (like mobile apps, curl, postman, or internal server calls)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+      const isVercelDomain = origin.endsWith('.vercel.app') || (process.env.VERCEL_URL && origin.includes(process.env.VERCEL_URL));
+      if (
+        allowedOrigins.indexOf(origin) !== -1 ||
+        process.env.NODE_ENV === 'development' ||
+        isVercelDomain ||
+        Boolean(process.env.VERCEL)
+      ) {
         return callback(null, true);
       }
       return callback(new Error('Blocked by CORS policy'));
@@ -50,6 +56,16 @@ const apiLimiter = rateLimit({
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Ensure database connection in serverless / Vercel fluid compute requests
+app.use(async (_req, _res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // Mount API routes
 app.use('/api', apiLimiter, routes);

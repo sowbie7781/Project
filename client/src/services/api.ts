@@ -15,7 +15,12 @@ import {
   CareerReadiness,
 } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const API_BASE_URL =
+  import.meta.env.PROD && (!rawApiUrl || rawApiUrl.includes('localhost') || rawApiUrl.includes('127.0.0.1'))
+    ? '/api'
+    : (rawApiUrl || '/api');
+
 
 
 class ApiClient {
