@@ -55,7 +55,7 @@ export const LandingPage: React.FC = () => {
       icon: BrainCircuit,
       title: 'AI Skill Assessment',
       desc: 'Adaptive, career-specific diagnostic questions testing syntax, problem solving, and architecture.',
-      color: 'text-indigo-600 bg-indigo-50',
+      color: 'text-ai-600 bg-ai-50',
     },
     {
       icon: Target,
@@ -118,7 +118,7 @@ export const LandingPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-32">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-100/60 via-slate-50/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/60 via-slate-50/20 to-transparent pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -131,13 +131,13 @@ export const LandingPage: React.FC = () => {
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
                 Discover Your Skills.{' '}
-                <span className="bg-gradient-to-r from-brand-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-brand-600 to-ai-500 bg-clip-text text-transparent">
                   Build Your Future.
                 </span>
               </h1>
 
               <p className="text-lg sm:text-xl text-slate-600 max-w-2xl leading-relaxed">
-                SkillPath AI helps students understand their current skills, identify career gaps, build personalized learning paths, and become career ready.
+                COMPETENCY AI helps students understand their current skills, identify career gaps, build personalized learning paths, and become career ready.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
@@ -174,7 +174,7 @@ export const LandingPage: React.FC = () => {
             <div className="lg:col-span-5 relative">
               <div className="relative mx-auto max-w-md lg:max-w-none">
                 {/* Visual Glass Card */}
-                <div className="relative rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 p-6 shadow-2xl text-white border border-slate-700/50 overflow-hidden">
+                <div className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 p-6 shadow-2xl text-white border border-slate-700/50 overflow-hidden">
                   <div className="absolute -right-16 -top-16 w-52 h-52 bg-brand-500/30 rounded-full blur-3xl pointer-events-none" />
                   <div className="absolute -left-16 -bottom-16 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -261,7 +261,7 @@ export const LandingPage: React.FC = () => {
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <h2 className="text-xs font-bold text-brand-600 uppercase tracking-widest">A Proven Student Pathway</h2>
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              How SkillPath AI Accelerates Your Career
+              How COMPETENCY AI Accelerates Your Career
             </p>
             <p className="text-base text-slate-600">
               From college enrollment to placement-ready confidence in five structured milestones.
@@ -358,7 +358,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* College Project Callout Banner */}
-      <section className="py-16 bg-gradient-to-r from-brand-900 to-indigo-950 text-white">
+      <section className="py-16 bg-gradient-to-r from-brand-900 to-slate-950 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-medium backdrop-blur-sm">
             <GraduationCap className="w-4 h-4 text-amber-300" />
@@ -385,10 +385,10 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center font-bold text-xs">
-                SP
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-600 to-ai-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                CA
               </div>
-              <span className="font-bold text-white text-base">SKILLPATH AI</span>
+              <span className="font-bold text-white text-base">COMPETENCY AI</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
               AI-Powered Career Competency Platform for College Students. Discover Your Skills. Build Your Future.
@@ -424,7 +424,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>© 2026 SKILLPATH AI. All rights reserved. Built with React, Node.js, and Google Gemini.</p>
+          <p>© 2026 COMPETENCY AI. All rights reserved. Built with React, Node.js, and Google Gemini.</p>
           <p>College Project Demonstration Version 1.0.0</p>
         </div>
       </footer>

@@ -75,7 +75,7 @@ export const CareerReadinessPage: React.FC = () => {
         </div>
 
         {/* Hero Score Card */}
-        <div className="bg-gradient-to-r from-brand-900 via-indigo-900 to-slate-950 rounded-3xl p-8 sm:p-10 text-white shadow-card flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-r from-brand-900 via-slate-900 to-slate-950 rounded-3xl p-8 sm:p-10 text-white shadow-card flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-xl text-center sm:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-amber-300 backdrop-blur-sm">
               <Award className="w-4 h-4" />

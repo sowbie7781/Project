@@ -87,7 +87,7 @@ export const FeaturesPage: React.FC = () => {
             Engineered for Real Career Competency
           </h1>
           <p className="text-base sm:text-lg text-slate-600">
-            Every feature in SkillPath AI is purpose-built to give college students a clear, actionable path toward engineering excellence.
+            Every feature in COMPETENCY AI is purpose-built to give college students a clear, actionable path toward engineering excellence.
           </p>
         </div>
 

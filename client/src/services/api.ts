@@ -126,7 +126,7 @@ class ApiClient {
       if (email.includes('student') || email.startsWith('student@college')) {
         return { token: 'demo_student_token_2026', user: mockDemoStudent };
       }
-      if (email.includes('admin') || email.startsWith('admin@skillpath')) {
+      if (email.includes('admin') || email.startsWith('admin@competency') || email.startsWith('admin@skillpath')) {
         return { token: 'demo_admin_token_2026', user: mockDemoAdmin };
       }
       // Check if user was registered in this browser session

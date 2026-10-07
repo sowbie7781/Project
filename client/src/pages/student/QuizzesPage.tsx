@@ -131,7 +131,7 @@ export const QuizzesPage: React.FC = () => {
             {/* If Quiz Result is ready, show review */}
             {quizResult ? (
               <div className="space-y-6">
-                <div className="p-6 bg-gradient-to-r from-brand-900 to-indigo-950 text-white rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="p-6 bg-gradient-to-r from-brand-900 to-slate-950 text-white rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div className="space-y-1 text-center sm:text-left">
                     <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
                       Attempt Scored

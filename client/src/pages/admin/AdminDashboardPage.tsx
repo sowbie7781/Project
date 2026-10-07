@@ -159,7 +159,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <Card className="p-4">
                 <span className="text-xs font-semibold text-slate-500">Assessments Taken</span>
-                <p className="text-2xl font-black text-indigo-600 mt-2">{stats?.totalAssessmentsTaken || 0}</p>
+                <p className="text-2xl font-black text-ai-600 mt-2">{stats?.totalAssessmentsTaken || 0}</p>
                 <span className="text-[10px] text-slate-400">Exams recorded</span>
               </Card>
 
@@ -177,7 +177,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <Card className="p-4">
                 <span className="text-xs font-semibold text-slate-500">Curriculum Paths</span>
-                <p className="text-2xl font-black text-purple-600 mt-2">{stats?.totalCareers || 10}</p>
+                <p className="text-2xl font-black text-brand-600 mt-2">{stats?.totalCareers || 10}</p>
                 <span className="text-[10px] text-slate-400">Configured tracks</span>
               </Card>
             </div>

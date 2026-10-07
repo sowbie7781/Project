@@ -73,7 +73,7 @@ export const ProfilePage: React.FC = () => {
 
         {/* Profile Card Header */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-subtle flex flex-col sm:flex-row items-center sm:items-start gap-6">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 text-white font-black text-3xl flex items-center justify-center shadow-md shrink-0">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-brand-600 to-ai-500 text-white font-black text-3xl flex items-center justify-center shadow-md shrink-0">
             {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
           </div>
 

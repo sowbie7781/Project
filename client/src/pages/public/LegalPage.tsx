@@ -16,7 +16,7 @@ export const LegalPage: React.FC<{ type: 'privacy' | 'terms' }> = ({ type }) => 
             {isPrivacy ? 'Privacy Policy' : 'Terms of Service'}
           </h1>
           <p className="text-sm text-slate-500">
-            Last updated: October 2026 • SKILLPATH AI Academic Demonstration
+            Last updated: October 2026 • COMPETENCY AI Academic Demonstration
           </p>
         </div>
 
@@ -26,7 +26,7 @@ export const LegalPage: React.FC<{ type: 'privacy' | 'terms' }> = ({ type }) => 
               <section className="space-y-2">
                 <h2 className="text-base font-bold text-slate-900">1. Information We Collect</h2>
                 <p>
-                  SKILLPATH AI collects academic profiles provided during onboarding (name, college name, department, year of study), diagnostic test responses, quiz attempt scores, and project submission URLs solely for calculating competency roadmaps.
+                  COMPETENCY AI collects academic profiles provided during onboarding (name, college name, department, year of study), diagnostic test responses, quiz attempt scores, and project submission URLs solely for calculating competency roadmaps.
                 </p>
               </section>
 
@@ -49,7 +49,7 @@ export const LegalPage: React.FC<{ type: 'privacy' | 'terms' }> = ({ type }) => 
               <section className="space-y-2">
                 <h2 className="text-base font-bold text-slate-900">1. Platform Scope & Purpose</h2>
                 <p>
-                  SKILLPATH AI is an educational demonstration platform designed for collegiate skill tracking. Assessments and AI feedback are instructional indicators and do not constitute official hiring guarantees by employers.
+                  COMPETENCY AI is an educational demonstration platform designed for collegiate skill tracking. Assessments and AI feedback are instructional indicators and do not constitute official hiring guarantees by employers.
                 </p>
               </section>
 

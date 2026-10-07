@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/common/Button';
-import { Sparkles, Mail, Lock, User, School, BookOpen, ArrowRight, AlertCircle } from 'lucide-react';
+import { Logo } from '../../components/common/Logo';
+import { Mail, Lock, User, School, BookOpen, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const { register } = useAuth();
@@ -70,12 +71,10 @@ export const RegisterPage: React.FC = () => {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 text-amber-300" />
-            </div>
+            <Logo size="lg" showText={false} className="group-hover:scale-105 transition-transform" />
           </Link>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Create Student Account</h2>
-          <p className="text-sm text-slate-500">Join SkillPath AI to benchmark and accelerate your technical career</p>
+          <p className="text-sm text-slate-500">Join COMPETENCY AI to benchmark and accelerate your technical career</p>
         </div>
 
         {/* Error Alert */}

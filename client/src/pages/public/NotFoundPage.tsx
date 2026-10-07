@@ -14,7 +14,7 @@ export const NotFoundPage: React.FC = () => {
           <span className="text-5xl font-black text-slate-900">404</span>
           <h1 className="text-xl font-bold text-slate-800">Page not found.</h1>
           <p className="text-sm text-slate-500 max-w-xs mx-auto">
-            The page you are looking for doesn't exist or has been relocated within the SkillPath curriculum.
+            The page you are looking for doesn't exist or has been relocated within the COMPETENCY AI curriculum.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">

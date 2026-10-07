@@ -131,7 +131,7 @@ export const RoadmapPage: React.FC = () => {
         </div>
 
         {/* Overall Progress Banner */}
-        <Card className="p-6 bg-gradient-to-r from-brand-900 via-indigo-900 to-slate-950 text-white shadow-card">
+        <Card className="p-6 bg-gradient-to-r from-brand-900 via-slate-900 to-slate-950 text-white shadow-card">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div className="space-y-2 max-w-2xl">
               <h3 className="text-xl font-bold">Curriculum Completion: {roadmap?.progress || 0}%</h3>

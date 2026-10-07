@@ -273,11 +273,11 @@ export const InterviewPage: React.FC = () => {
 
             {/* Suggestions */}
             {feedback.suggestions && feedback.suggestions.length > 0 && (
-              <div className="p-4 rounded-2xl bg-indigo-50/40 border border-indigo-100 space-y-2">
-                <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Lightbulb className="w-4 h-4 text-indigo-600" /> Actionable Preparation Suggestions
+              <div className="p-4 rounded-2xl bg-ai-50/40 border border-ai-100 space-y-2">
+                <h4 className="text-xs font-bold text-ai-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <Lightbulb className="w-4 h-4 text-ai-600" /> Actionable Preparation Suggestions
                 </h4>
-                <ul className="space-y-1.5 text-xs text-indigo-800">
+                <ul className="space-y-1.5 text-xs text-ai-800">
                   {feedback.suggestions.map((sug, i) => (
                     <li key={i}>• {sug}</li>
                   ))}

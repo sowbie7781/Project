@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/common/Button';
-import { Sparkles, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { Logo } from '../../components/common/Logo';
+import { Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -49,15 +50,21 @@ export const LoginPage: React.FC = () => {
   };
 
   const handleFastDemoAdmin = async () => {
-    setEmail('admin@skillpath.ai');
-    setPassword('Admin@SkillPath2026!');
+    setEmail('admin@competency.ai');
+    setPassword('Admin@Competency2026!');
     setError(null);
     setLoading(true);
     try {
-      await login({ email: 'admin@skillpath.ai', password: 'Admin@SkillPath2026!' });
+      await login({ email: 'admin@competency.ai', password: 'Admin@Competency2026!' });
       navigate('/admin');
     } catch (err: any) {
-      setError(err.message || 'Login failed. Please verify your credentials.');
+      // Fallback attempt with legacy demo email if needed
+      try {
+        await login({ email: 'admin@skillpath.ai', password: 'Admin@SkillPath2026!' });
+        navigate('/admin');
+      } catch (fallbackErr: any) {
+        setError(err.message || 'Login failed. Please verify your credentials.');
+      }
     } finally {
       setLoading(false);
     }
@@ -69,9 +76,7 @@ export const LoginPage: React.FC = () => {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 text-amber-300" />
-            </div>
+            <Logo size="lg" showText={false} className="group-hover:scale-105 transition-transform" />
           </Link>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Welcome Back</h2>
           <p className="text-sm text-slate-500">Sign in to resume your career competency roadmap</p>
@@ -167,7 +172,7 @@ export const LoginPage: React.FC = () => {
 
         {/* Footer */}
         <div className="text-center pt-2 text-xs text-slate-500">
-          New to SkillPath AI?{' '}
+          New to COMPETENCY AI?{' '}
           <Link to="/register" className="font-bold text-brand-600 hover:text-brand-700">
             Create an Account
           </Link>

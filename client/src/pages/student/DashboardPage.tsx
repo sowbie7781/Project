@@ -135,7 +135,7 @@ export const DashboardPage: React.FC = () => {
               <Card className="p-4 flex flex-col justify-between">
                 <span className="text-xs font-semibold text-slate-500">Roadmap</span>
                 <div className="my-2">
-                  <span className="text-2xl font-black text-indigo-600">{roadmapProgress}%</span>
+                  <span className="text-2xl font-black text-ai-600">{roadmapProgress}%</span>
                 </div>
                 <span className="text-[10px] text-slate-400">Curriculum done</span>
               </Card>
@@ -143,7 +143,7 @@ export const DashboardPage: React.FC = () => {
               <Card className="p-4 flex flex-col justify-between">
                 <span className="text-xs font-semibold text-slate-500">Skills Mastered</span>
                 <div className="my-2">
-                  <span className="text-2xl font-black text-purple-600">
+                  <span className="text-2xl font-black text-brand-600">
                     {masteredSkillsCount}/{totalSkillsCount || 10}
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export const DashboardPage: React.FC = () => {
 
             {/* Recommended Next Step Section */}
             {topRecommendation ? (
-              <Card className="p-6 bg-gradient-to-r from-brand-900 to-indigo-950 text-white border-0 shadow-lg relative overflow-hidden">
+              <Card className="p-6 bg-gradient-to-r from-brand-900 to-slate-950 text-white border-0 shadow-lg relative overflow-hidden">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
                   <div className="space-y-2 max-w-2xl">
                     <div className="flex items-center gap-2">
@@ -195,7 +195,7 @@ export const DashboardPage: React.FC = () => {
                       </span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-extrabold text-white">
-                      Master {topRecommendation.skillName} Core Concepts
+                       Master {topRecommendation.skillName} Core Concepts
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                       Your current benchmark is at {topRecommendation.currentLevel}%, while {typeof user?.careerGoal === 'object' ? (user.careerGoal as any).name : 'Full Stack'} positions require at least {topRecommendation.requiredLevel}%. Closing this {topRecommendation.priority.toLowerCase()} priority gap will increase your Career Readiness by ~8%.
@@ -212,7 +212,7 @@ export const DashboardPage: React.FC = () => {
                 </div>
               </Card>
             ) : (
-              <Card className="p-6 bg-gradient-to-r from-brand-900 to-indigo-950 text-white">
+              <Card className="p-6 bg-gradient-to-r from-brand-900 to-slate-950 text-white">
                 <div className="flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-bold">Begin With Diagnostic Assessment</h3>

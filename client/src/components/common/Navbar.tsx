@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from './Button';
+import { Logo } from './Logo';
 import { Sparkles, Menu, X, User, LogOut, LayoutDashboard, Shield } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -29,14 +30,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5 text-amber-300" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              SKILLPATH <span className="text-brand-600">AI</span>
-            </span>
-          </div>
+          <Logo size="md" className="group-hover:scale-105 transition-transform" />
         </Link>
 
         {/* Desktop Navigation Links */}

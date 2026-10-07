@@ -358,8 +358,8 @@ class FallbackStore {
             return this.users.find(u => u.email === 'student@college.edu');
         }
         // Support demo admin alias
-        if (clean === 'admin@skillpath.ai' || clean === 'admin@college.edu' || clean === 'admin') {
-            return this.users.find(u => u.email === 'admin@skillpath.ai');
+        if (clean === 'admin@competency.ai' || clean === 'admin@skillpath.ai' || clean === 'admin@college.edu' || clean === 'admin') {
+            return this.users.find(u => u.email === 'admin@competency.ai' || u.email === 'admin@skillpath.ai') || this.users.find(u => u.role === 'admin');
         }
         return this.users.find(u => u.email === clean);
     }
@@ -379,8 +379,9 @@ class FallbackStore {
             }
         }
         // Fast-pass for demo admin credentials
-        if (clean === 'admin@skillpath.ai' || clean === 'admin@college.edu' || clean === 'admin') {
-            if (inputPassword === 'Admin@SkillPath2026!' ||
+        if (clean === 'admin@competency.ai' || clean === 'admin@skillpath.ai' || clean === 'admin@college.edu' || clean === 'admin') {
+            if (inputPassword === 'Admin@Competency2026!' ||
+                inputPassword === 'Admin@SkillPath2026!' ||
                 inputPassword === 'admin' ||
                 inputPassword === 'admin123' ||
                 inputPassword === 'password123') {

@@ -189,7 +189,7 @@ export const CareerDetailPage: React.FC = () => {
             {/* Learning Phases */}
             <Card className="p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600">
+                <div className="p-2.5 rounded-xl bg-ai-50 text-ai-600">
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <div>
@@ -238,7 +238,7 @@ export const CareerDetailPage: React.FC = () => {
             {/* Interview Topics */}
             <Card className="p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 bg-purple-50 text-purple-600 rounded-xl">
+                <div className="p-2 bg-brand-50 text-brand-600 rounded-xl">
                   <HelpCircle className="w-5 h-5" />
                 </div>
                 <h3 className="text-base font-bold text-slate-900">Core Interview Topics</h3>

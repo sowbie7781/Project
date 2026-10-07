@@ -84,7 +84,7 @@ export const SkillGapPage: React.FC = () => {
 
         {/* AI Executive Summary Banner */}
         {summary && (
-          <Card className="p-6 bg-gradient-to-r from-brand-900 via-indigo-900 to-slate-950 text-white border-0 shadow-lg space-y-4">
+          <Card className="p-6 bg-gradient-to-r from-brand-900 via-slate-900 to-slate-950 text-white border-0 shadow-lg space-y-4">
             <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-4 h-4" /> AI Competency Diagnostic Executive Summary
             </div>

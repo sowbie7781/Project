@@ -127,7 +127,7 @@ export const mockDemoAdmin: User = {
   id: '6ac5d095a05b52ab9f932594',
   _id: '6ac5d095a05b52ab9f932594',
   name: 'System Administrator',
-  email: 'admin@skillpath.ai',
+  email: 'admin@competency.ai',
   role: 'admin',
   college: 'Global Institute of Technology',
   course: 'M.Tech',

@@ -23,7 +23,7 @@ export const AboutPage: React.FC = () => {
             College Capstone Project
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            About SKILLPATH AI
+            About COMPETENCY AI
           </h1>
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
             Discover Your Skills. Build Your Future. An academic AI-powered career competency platform bridging the gap between college curricula and tech industry benchmarks.
@@ -47,7 +47,7 @@ export const AboutPage: React.FC = () => {
               In conventional collegiate computer science programs, students often complete theory-heavy courses without clear visibility into how their competencies map against real industry job descriptions. Traditional learning management systems (LMS) track exam marks rather than practical industry readiness.
             </p>
             <p>
-              <strong className="text-slate-900 font-semibold">SKILLPATH AI</strong> introduces an automated, deterministic career-competency assessment and guidance framework. By evaluating student performance across diagnostic assessments, hands-on portfolio submissions, topic quizzes, and AI-evaluated mock interview rounds, the system synthesizes a comprehensive Career Readiness score alongside a personalized learning roadmap powered by Google Gemini.
+              <strong className="text-slate-900 font-semibold">COMPETENCY AI</strong> introduces an automated, deterministic career-competency assessment and guidance framework. By evaluating student performance across diagnostic assessments, hands-on portfolio submissions, topic quizzes, and AI-evaluated mock interview rounds, the system synthesizes a comprehensive Career Readiness score alongside a personalized learning roadmap powered by Google Gemini.
             </p>
           </div>
         </Card>
@@ -55,7 +55,7 @@ export const AboutPage: React.FC = () => {
         {/* Architectural Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="p-6 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-brand-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-ai-50 text-ai-600 flex items-center justify-center">
               <BrainCircuit className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-slate-900 text-base">AI Integration</h3>
@@ -75,7 +75,7 @@ export const AboutPage: React.FC = () => {
           </Card>
 
           <Card className="p-6 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
               <Compass className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-slate-900 text-base">Prerequisite DAG</h3>
@@ -114,7 +114,7 @@ export const AboutPage: React.FC = () => {
         <div className="text-center pt-4">
           <Link to="/register">
             <Button size="lg" icon={<ArrowRight className="w-4 h-4 ml-1" />}>
-              Get Started with SkillPath AI
+              Get Started with COMPETENCY AI
             </Button>
           </Link>
         </div>

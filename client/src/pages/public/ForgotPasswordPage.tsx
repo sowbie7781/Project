@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/common/Button';
-import { Sparkles, Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Logo } from '../../components/common/Logo';
+import { Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -19,9 +20,7 @@ export const ForgotPasswordPage: React.FC = () => {
       <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-card">
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-sm">
-              <Sparkles className="w-5 h-5 text-amber-300" />
-            </div>
+            <Logo size="lg" showText={false} className="group-hover:scale-105 transition-transform" />
           </Link>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Password Recovery</h2>
           <p className="text-sm text-slate-500">Reset credentials for your college student account</p>
