@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const interviewController_1 = require("../controllers/interviewController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.post('/generate', auth_1.authenticate, interviewController_1.generateInterviewQuestions);
+router.post('/feedback', auth_1.authenticate, interviewController_1.evaluateInterviewAnswer);
+router.get('/history', auth_1.authenticate, interviewController_1.getInterviewHistory);
+exports.default = router;

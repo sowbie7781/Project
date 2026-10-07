@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const roadmapController_1 = require("../controllers/roadmapController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.get('/', auth_1.authenticate, roadmapController_1.getRoadmap);
+router.post('/generate', auth_1.authenticate, roadmapController_1.generateOrRegenerateRoadmap);
+router.put('/topic/:topicId', auth_1.authenticate, roadmapController_1.updateTopicStatus);
+exports.default = router;

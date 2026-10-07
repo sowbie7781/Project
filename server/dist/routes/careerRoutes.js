@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const careerController_1 = require("../controllers/careerController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.get('/', careerController_1.getCareers);
+router.get('/:id', careerController_1.getCareerById);
+router.post('/select', auth_1.authenticate, careerController_1.selectCareerGoal);
+exports.default = router;

@@ -4,10 +4,9 @@ node_modules/
 .pnp.js
 
 # Production build outputs
-dist/
+/dist/
 build/
 client/dist/
-server/dist/
 
 # Environment files
 .env
